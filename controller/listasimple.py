@@ -1,2 +1,2 @@
-class listasimple:
-    
+class listasimple: 
+    pass
