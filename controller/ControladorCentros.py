@@ -1,0 +1,2 @@
+class ControladorCentros: 
+    pass

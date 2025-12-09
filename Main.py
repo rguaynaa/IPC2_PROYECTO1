@@ -1,5 +1,8 @@
 class main:
-    def Menuprincipal():
+    def __init__(self):
+        pass
+
+    def Menuprincipal(self):
         while True:
             print("\n" +"="*40)
             print("|            Menu Principal            |")
@@ -43,13 +46,20 @@ class main:
     
 
 #......................FUNCIONES DEL MENU..........................
-class funciones: 
+from controller.ControladorMenu import ControladorMenu
 
-    def CargarArchivoXML():
+class funciones:
+    
+    def __init__(self):
+        self.controlador = ControladorMenu()
+
+    def CargarArchivoXML(self):
+        control = self.controlador()
+        
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
         print("="*20)
-        ruta = input("Ingrese la ruta del archivo XML: ")
+        ruta = control.cargar_xml()
         print("Cargando Archivo...")
         return ruta
     

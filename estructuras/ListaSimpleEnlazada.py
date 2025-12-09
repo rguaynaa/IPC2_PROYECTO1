@@ -1,4 +1,4 @@
-from Nodo import Nodo
+from estructuras.Nodo import Nodo
 
 class ListaSimpleEnlazada:
     """
@@ -15,8 +15,9 @@ class ListaSimpleEnlazada:
         return self.primero is None
 
 
+    # Método para insertar datos en la lista
     def insertar_dato(self,dato):
-        nuevo_nodo = Nodo()
+        nuevo_nodo = Nodo(dato)
         #El primer nod esta vació, va entrar a esta conedición en la primera iteración
         if self.esta_vacia():
             self.primero = nuevo_nodo
@@ -27,5 +28,19 @@ class ListaSimpleEnlazada:
             actual.next = nuevo_nodo
         self.longitud += 1
 
-    def mostrar_dato(self):
-        pass
+    # Método para mostrar la lista completa.
+    def mostrar_informacion(self):
+
+        if self.esta_vacia():
+            print("Lista se encuentra vacía.")
+            return
+        
+        actual = self.primero
+
+        while actual is not None:
+            if hasattr(actual.dato, 'mostrar_datos'):
+                actual.dato.mostrar_datos()
+            else:
+                print(actual.dato)
+            actual = actual.next
+

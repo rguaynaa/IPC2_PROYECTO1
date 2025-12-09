@@ -1,3 +1,4 @@
+from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
 
 class MaquinaVirtual:
     def __init__(self,id, id_centro, so, cpu, ram_GB, almacenamiento_GB,ip):
@@ -8,7 +9,7 @@ class MaquinaVirtual:
         self.ram_GB = ram_GB
         self.almacenamiento_GB = almacenamiento_GB
         self.ip = ip
-        self.contenedores = [] #Acá se va estar almacenando los contenedores.
+        self.contenedores = ListaSimpleEnlazada() #Acá se va estar almacenando los contenedores.
         self.estado = "activo"
     
     def mostrar_datos(self):

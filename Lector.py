@@ -1,15 +1,23 @@
-import xml.etree.ElementTree as ET
+from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
 from modelos.CentroDatos import CentroDatos
 from modelos.MaquinaVirtual import MaquinaVirtual
 from modelos.Contenedor import Contenedor
 from modelos.Solicitud import Solicitud
+from modelos.Instrucciones import CrearVM, MigrarVM, Procesar
+import xml.etree.ElementTree as ET
+
 
 class Lector:
-    def __init__(self):
-        self.list_centros = []
+    def __init__(self,):
+
         self.list_mv = []
         self.list_cont = []
         self.list_solicitud = []
+        self.list_crearVM = []
+        self.list_migrarVM = []
+        self.list_procesar = []
+        self.centrosDatos = ListaSimpleEnlazada()
+
     
     def cargar_archivo_xml(self, ruta_archivo):
         try:
@@ -45,12 +53,12 @@ class Lector:
             almacenamiento = int(capacidad.find('almacenamiento').text)
 
             nuevo_centro = CentroDatos(id_centro, nombre, pais, ciudad, cpu, ram, almacenamiento)
+            self.centrosDatos.insertar_dato(nuevo_centro)
 
-            self.list_centros.append(nuevo_centro)
             print(f"Centro {id_centro} cargado exitosamente.")
 
-        for c in self.list_centros:
-            c.mostrar_datos()
+        print("Lista Enlazada")
+        self.centrosDatos.mostrar_informacion()
 
 
     def cargar_maquinas_virtuales(self,root):
@@ -73,9 +81,9 @@ class Lector:
 
             nueva_mv = MaquinaVirtual(id_mv,id_centro,so,cpu,ram,almacenamiento,ip)
 
-            
             self.list_mv.append(nueva_mv)
             print(f"MaquinaVirtual {id_mv} cargado exitosamente.")
+
 
             if self.list_mv is None:
                 print("Hubo un error al cargar el archivo.")
@@ -132,6 +140,57 @@ class Lector:
         
         for sol in self.list_solicitud:
             sol.mostrar_datos()
+
+    def cargar_instrucciones(self, root):
+        instrucciones_xml = root.find('.//instrucciones')
+
+        if instrucciones_xml is None:
+            return
+        
+        for inst in instrucciones_xml.findall('instruccion'):
+            tipo_inst = inst.get('tipo')
+
+            if tipo_inst == ('crearVM'):
+                id_vm = inst.find('id').text
+                id_centro = inst.find('centro').text
+                so = inst.find('so').text
+                cpu = inst.find('cpu').text
+                ram = inst.find('ram').text
+                almacenamiento = inst.find('almacenamiento').text
+                nuevoCrearVM = CrearVM(tipo_inst,id_vm,id_centro,so,cpu,ram,almacenamiento)
+                self.list_crearVM.append(nuevoCrearVM)
+
+                print(f"Instruccion {tipo_inst} cargado exitosamente")
+                for crear in self.list_crearVM:
+                    crear.mostrar_datos()
+            
+            elif tipo_inst == ('migrarVM'):
+                id_vm = inst.find('vmId').text
+                id_centro_origen = inst.find('centroOrigen').text
+                id_centro_destino = inst.find('centroDestino').text
+
+                nuevaMigra = MigrarVM(tipo_inst,id_vm,id_centro_origen,id_centro_destino)
+                self.list_migrarVM.append(nuevaMigra)
+
+
+                print(f"Instruccion {tipo_inst} cargado exitosamente")
+
+                for migra in self.list_migrarVM:
+                    migra.mostrar_datos()
+
+            
+            elif tipo_inst == ('procesarSolicitudes'):
+                cantidad = inst.find('cantidad').text
+
+                nuevoProce = Procesar(tipo_inst,cantidad)
+                self.list_procesar.append(nuevoProce)
+
+                for p in self.list_procesar:
+                    p.mostrar_datos()
+
+                print(f"Instruccion {tipo_inst} cargado exitosamente")
+
+
 
 
     
