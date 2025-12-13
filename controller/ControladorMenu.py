@@ -1,10 +1,9 @@
 class ControladorMenu:
 
     def __init__(self):
-        pass
+       pass
 
-
-    def cargar_xml(tipo):
+    def cargar_xml(self,tipo):
         nombre_archivo = input(f'Ingrese el nombre del archvo "{tipo}.xml": ').strip()
         if nombre_archivo == '':
             return ''

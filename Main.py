@@ -1,8 +1,13 @@
-class main:
+from controller.ControladorMenu import ControladorMenu
+from Lector import Lector
+
+
+class Main:
     def __init__(self):
-        pass
+        self.funciones = Funciones()
 
     def Menuprincipal(self):
+
         while True:
             print("\n" +"="*40)
             print("|            Menu Principal            |")
@@ -22,23 +27,23 @@ class main:
             
 
             if opcion=="1":
-                funciones.CargarArchivoXML()
+                self.funciones.cargarArchivoXML()
             elif opcion=="2":
-                funciones.GestionCentrosDatos()
+                self.funciones.gestionCentrosDatos()
             elif opcion=="3":
-                funciones.GestionMaquinasVirtuales()
+                self.funciones.gestionMaquinasVirtuales()
             elif opcion=="4":
-                funciones.GestionContenedores()
+                self.funciones.gestionContenedores()
             elif opcion=="5":
-                funciones.GestionSolicitudes()
+                self.funciones.gestionSolicitudes()
             elif opcion=="6":
-                funciones.ReportesGraphviz()
+                self.funciones.reportesGraphviz()
             elif opcion=="7":
-                funciones. GenerarReporteHTML()
+                self.funciones.generarReporteXML()
             elif opcion=="8":
-                funciones.HistorialOperaciones()
+                self.funciones.historialOperaciones()
             elif opcion=="9":
-                funciones.Salir()
+                self.funciones.salir()
                 break
             else:
                 print("Opción inválida. Por favor, intente de nuevo.")
@@ -46,24 +51,24 @@ class main:
     
 
 #......................FUNCIONES DEL MENU..........................
-from controller.ControladorMenu import ControladorMenu
-
-class funciones:
+class Funciones:
     
     def __init__(self):
         self.controlador = ControladorMenu()
+        self.lector = Lector()
 
-    def CargarArchivoXML(self):
-        control = self.controlador()
+    def cargarArchivoXML(self):
         
+
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
         print("="*20)
-        ruta = control.cargar_xml()
-        print("Cargando Archivo...")
-        return ruta
+        ruta = self.controlador.cargar_xml('entrada')
+        self.lector.cargar_archivo_xml(ruta)
     
-    def GestionCentrosDatos():
+
+
+    def gestionCentrosDatos(self):
         
         while True:
             print("\n" +"="*40)
@@ -96,7 +101,7 @@ class funciones:
 
 
     
-    def GestionMaquinasVirtuales():
+    def gestionMaquinasVirtuales(self):
         while True:
             print("\n" +"="*46)
             print("|        Gestión de Máquinas Virtuales       |")
@@ -126,7 +131,7 @@ class funciones:
         
 
     
-    def GestionContenedores():
+    def gestionContenedores(self):
         while True:
             print("\n" +"="*44)
             print("|          Gestión de Contenedores         |")
@@ -157,7 +162,7 @@ class funciones:
             else:
                 print("Opción inválida. Por favor, intente de nuevo.")
 
-    def GestionSolicitudes():
+    def gestionSolicitudes(self):
         while True:
             print("\n" +"="*42)
             print("|         Gestión de Solicitudes         |")
@@ -188,7 +193,7 @@ class funciones:
                 print("Opción inválida. Por favor, intente de nuevo.")
         
     
-    def ReportesGraphviz():
+    def reportesGraphviz(self):
         while True:
             print("\n" +"="*56)
             print("|                 Reportes en Graphviz                 |")
@@ -219,19 +224,20 @@ class funciones:
             else:
                 print("Opción inválida. Por favor, intente de nuevo.")
 
-    def GenerarReporteHTML():
+    def generarReporteXML(self):
         print("Generando Reporte HTML \"salida.html\"...")
         # LOGICA O METODO A LLAMAR
     
-    def HistorialOperaciones():
+    def historialOperaciones(self):
         print("Mostrando Historial de Operaciones...")
         # LOGICA O METODO A LLAMAR
     
-    def Salir():
+    def salir(self):
         print("Saliendo del programa...")
         exit()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+        main = Main()
         main.Menuprincipal()
 
 #......................METODOS DEL PROGRAMA..........................

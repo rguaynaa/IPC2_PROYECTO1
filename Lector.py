@@ -1,22 +1,26 @@
-from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
+# from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
 from modelos.CentroDatos import CentroDatos
 from modelos.MaquinaVirtual import MaquinaVirtual
 from modelos.Contenedor import Contenedor
 from modelos.Solicitud import Solicitud
 from modelos.Instrucciones import CrearVM, MigrarVM, Procesar
 import xml.etree.ElementTree as ET
+from controller.ControladorCentros import ControladorCentros
+from controller.ControladorVM import ControladorVM
 
 
 class Lector:
     def __init__(self,):
+        self.controlador = ControladorCentros()
+        self.controladorVM = ControladorVM()
 
-        self.list_mv = []
+        #self.list_mv = []
         self.list_cont = []
         self.list_solicitud = []
         self.list_crearVM = []
         self.list_migrarVM = []
         self.list_procesar = []
-        self.centrosDatos = ListaSimpleEnlazada()
+        # self.centrosDatos = ListaSimpleEnlazada()
 
     
     def cargar_archivo_xml(self, ruta_archivo):
@@ -33,6 +37,9 @@ class Lector:
         except Exception as e:
             return False,f"Error al cargar el archivo {str(e)}"
     
+    """
+        Este método se encarga de leer el fragmente del archivo xml que contiene el atributo centro.
+    """
     def cargar_centros(self, root):
         centros_xml = root.find('.//centrosDatos')
         if centros_xml is None:
@@ -52,15 +59,23 @@ class Lector:
             ram = int(capacidad.find('ram').text)
             almacenamiento = int(capacidad.find('almacenamiento').text)
 
-            nuevo_centro = CentroDatos(id_centro, nombre, pais, ciudad, cpu, ram, almacenamiento)
-            self.centrosDatos.insertar_dato(nuevo_centro)
+            self.controlador.crear_centros(id_centro, nombre, pais, ciudad, cpu, ram, almacenamiento)
+
+            # nuevo_centro = CentroDatos(id_centro, nombre, pais, ciudad, cpu, ram, almacenamiento)
+            # self.centrosDatos.insertar_dato(nuevo_centro)
+            
 
             print(f"Centro {id_centro} cargado exitosamente.")
 
-        print("Lista Enlazada")
-        self.centrosDatos.mostrar_informacion()
+        # print("Lista Enlazada")
+        # self.centrosDatos.mostrar_informacion()
 
+        print("Lista desde controlador")
+        self.controlador.centrosDatos.mostrar_informacion()
 
+    """
+        Este método se encarga de leer el fragmento del archivo xml que contiene el maquina virtual.
+    """
     def cargar_maquinas_virtuales(self,root):
         maquinas_xml = root.find('.//maquinasVirtuales')
         if maquinas_xml is None:
@@ -79,13 +94,16 @@ class Lector:
 
             ip = maquina.find('ip').text
 
-            nueva_mv = MaquinaVirtual(id_mv,id_centro,so,cpu,ram,almacenamiento,ip)
+            self.controladorVM.crear_vm(id_mv,id_centro,so,cpu,ram,almacenamiento,ip)
 
-            self.list_mv.append(nueva_mv)
+            # nueva_mv = MaquinaVirtual(id_mv,id_centro,so,cpu,ram,almacenamiento,ip)
+
+            # self.list_mv.append(nueva_mv)
+
             print(f"MaquinaVirtual {id_mv} cargado exitosamente.")
 
 
-            if self.list_mv is None:
+            if self.controladorVM.vm is None:
                 print("Hubo un error al cargar el archivo.")
             else:
                 contenedores =  maquina.find('contenedores')
@@ -105,8 +123,11 @@ class Lector:
 
                     print(f"Contenedor {id_cont} cargado exitosamente.")
                 
-        for mv in self.list_mv:
-            mv.mostrar_datos()
+        # for mv in self.list_mv:
+        #     mv.mostrar_datos()
+
+        print("VM desde controler")
+        self.controladorVM.vm.mostrar_informacion()
 
         print()
 
@@ -141,6 +162,9 @@ class Lector:
         for sol in self.list_solicitud:
             sol.mostrar_datos()
 
+    """
+        Este método se encarga de leer el fragmento del archivo xml que contiene las instrucciones.
+    """        
     def cargar_instrucciones(self, root):
         instrucciones_xml = root.find('.//instrucciones')
 
