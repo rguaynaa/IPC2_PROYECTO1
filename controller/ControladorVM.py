@@ -1,14 +1,12 @@
 from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
-from modelos.MaquinaVirtual import MaquinaVirtual
-from controller.ControladorCentros import ControladorCentros
+
 
 class ControladorVM: 
     def __init__(self):
-        self.vm = ListaSimpleEnlazada()
-        self.controlerCentro  = ControladorCentros
+        self.lista_vm = ListaSimpleEnlazada()
 
-    def crear_vm(self,id, id_centro, so, cpu, ram_GB, almacenamiento_GB,ip):
-        nuevo_vm = MaquinaVirtual(id, id_centro, so, cpu, ram_GB, almacenamiento_GB,ip)
-        self.vm.agregar_dato(nuevo_vm)
-        return
+    def crear_vm(self,vm):
+        self.lista_vm.agregar_dato(vm)
     
+    def mostrar_vm(self):
+        self.lista_vm.mostrar_informacion()

@@ -19,4 +19,37 @@ class CentroDatos:
         print("Almacenamiento: ",self.almacenamiento_total_GB,"/100 TB") #Pendiente de configurar 
         print("VMs activas: ",self.vm.obtener_longitud())
     
+    def cpu_disponible(self):
+        usado = 0
+        actual = self.vm.primero
+        while actual:
+            usado += actual.dato.cpu_nucleos
+            actual = actual.siguiente
+        return self.cpu_nucleos_total - usado
+    
+    def ram_disponible(self):
+        usado = 0
+        actual = self.vm.primero
+        while actual:
+            usado += actual.dato.ram_GB
+            actual = actual.siguiente
+        return self.ram_total_GB - usado
+    
+    def almacenamiento_disponible(self):
+        usado = 0
+        actual = self.vm.primero
+        while actual:
+            usado += actual.dato.almacenamiento_GB
+            actual = actual.siguiente
+        return self.almacenamiento_total_GB - usado
+    
+    def porcentaje_uso_cpu(self):
+        if self.cpu_nucleos_total > 0:
+            procentaje = ((self.cpu_nucleos_total - self.cpu_disponible)/ self.cpu_nucleos_total * 100)
+            return procentaje
+        else:
+            return 0
+            
+
+
     

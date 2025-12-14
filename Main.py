@@ -1,5 +1,7 @@
 from controller.ControladorMenu import ControladorMenu
 from carpeta_xml.Lector import Lector
+from controller.ControladorVM import ControladorVM
+from controller.ControladorCentros import ControladorCentros
 
 
 class Main:
@@ -18,7 +20,7 @@ class Main:
             print("|4. Gestión de Contenedores.           |")
             print("|5. Gestión de Solicitudes.            |")
             print("|6. Reportes en Graphviz.              |")
-            print("|7. Generar Reporte HTML \"salida.html\".|")
+            print("|7. Generar Reporte XML \"salida.xml\".|")
             print("|8. Historial de Operaciopnes.         |")
             print("|9. Salir.                             |")
             print("="*40)
@@ -47,29 +49,27 @@ class Main:
                 break
             else:
                 print("Opción inválida. Por favor, intente de nuevo.")
-            
-    
 
 #......................FUNCIONES DEL MENU..........................
 class Funciones:
     
     def __init__(self):
-        self.controlador = ControladorMenu()
-        self.lector = Lector()
+        self.controladorMenu = ControladorMenu()
+        self.controladorVM = ControladorVM()
+        self.controladorCentro = ControladorCentros()
+        self.lector = Lector(controladorVM=self.controladorVM, controladorCentros=self.controladorCentro)
+
 
     def cargarArchivoXML(self):
-        
-
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
         print("="*20)
-        ruta = self.controlador.cargar_xml('entrada')
+        ruta = self.controladorMenu.cargar_xml('entrada')
         self.lector.cargar_archivo_xml(ruta)
     
 
-
     def gestionCentrosDatos(self):
-        
+
         while True:
             print("\n" +"="*40)
             print("|     Gestión de Centros de Datos.     |")
@@ -80,15 +80,12 @@ class Funciones:
             print("|4. Volver al Menú Principal           |")
             print( "="*40)
             opcion = input("Seleccione una opción: ")
-            
-
         
             if opcion=="1":
-                print("Listando Todos los Centros de Datos...")
-                # LOGICA O METODO A LLAMAR
+                self.controladorCentro.mostrar_centros_datos()
             elif opcion=="2":
-                print("Buscando Centro de Datos por ID...")
-                # LOGICA O METODO A LLAMAR
+                id_buscado = input("Ingrese el ID: ")
+                self.controladorCentro.lista_centros.buscar_dato_por_id(id_buscado,'id')
             elif opcion=="3":
                 print("Mostrando Centro con mayor recursos...")
                 # LOGICA O METODO A LLAMAR
@@ -98,7 +95,6 @@ class Funciones:
             else:
                 print("Opción inválida. Por favor, intente de nuevo.")
             return opcion
-
 
     
     def gestionMaquinasVirtuales(self):
@@ -116,6 +112,7 @@ class Funciones:
 
             if opcion=="1":
                 print("Buscando VM por ID...")
+                self.controladorVM.mostrar_vm()
                 # LOGICA O METODO A LLAMAR
             elif opcion=="2":
                 print("Listando Todas Las VMs de un Centro de Datos...")
@@ -225,7 +222,7 @@ class Funciones:
                 print("Opción inválida. Por favor, intente de nuevo.")
 
     def generarReporteXML(self):
-        print("Generando Reporte HTML \"salida.html\"...")
+        print("Generando Reporte XML \"salida.xml\"...")
         # LOGICA O METODO A LLAMAR
     
     def historialOperaciones(self):
