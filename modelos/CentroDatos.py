@@ -14,9 +14,9 @@ class CentroDatos:
     def mostrar_datos(self):
         print("Centro: ",self.nombre, "(",self.id,")", "-", self.ciudad, ",", self.pais)
         print("Ubicación: ",self.ciudad, "," ,self.pais)
-        print("CPU: ",self.cpu_nucleos_total,"/100") #Pendiente de configurar
-        print("RAM: ",self.ram_total_GB,"/100") #Pendiente de configurar
-        print("Almacenamiento: ",self.almacenamiento_total_GB,"/100 TB") #Pendiente de configurar 
+        print("CPU: ",self.cpu_disponible(),"/",self.cpu_nucleos_total) #Pendiente de configurar
+        print("RAM: ",self.ram_disponible(),"/",self.ram_total_GB,"GB") #Pendiente de configurar
+        print("Almacenamiento: ",self.almacenamiento_disponible(),"/",self.almacenamiento_total_GB,"TB") #Pendiente de configurar 
         print("VMs activas: ",self.vm.obtener_longitud())
     
     def cpu_disponible(self):

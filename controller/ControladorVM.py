@@ -1,6 +1,5 @@
 from estructuras.ListaSimpleEnlazada import ListaSimpleEnlazada
 
-
 class ControladorVM: 
     def __init__(self):
         self.lista_vm = ListaSimpleEnlazada()
@@ -10,3 +9,6 @@ class ControladorVM:
     
     def mostrar_vm(self):
         self.lista_vm.mostrar_informacion()
+    
+   
+

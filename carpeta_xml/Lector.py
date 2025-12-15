@@ -4,12 +4,14 @@ from modelos.Instrucciones import CrearVM, MigrarVM, Procesar
 import xml.etree.ElementTree as ET
 from modelos.CentroDatos import CentroDatos
 from modelos.MaquinaVirtual import MaquinaVirtual
+from controller.ControladorVM import ControladorVM
+from controller.ControladorCentros import ControladorCentros
 
 
 class Lector:
     def __init__(self, controladorVM=None, controladorCentros=None):
-        self.controladorVM = controladorVM 
-        self.controladorCentros = controladorCentros
+        self.controladorVM = controladorVM if controladorVM is not None else ControladorVM()
+        self.controladorCentros = controladorCentros if controladorCentros is not None else ControladorCentros()
         self.list_solicitud = []
         self.list_crearVM = []
         self.list_migrarVM = []
@@ -77,7 +79,9 @@ class Lector:
             nuevo_vm = MaquinaVirtual(id_mv,id_centro,so,cpu,ram,almacenamiento,ip)
             self.controladorVM.crear_vm(nuevo_vm)
 
-            print(f"MaquinaVirtual {id_mv} cargado exitosamente.")
+            agregado = self.controladorCentros.agregar_vm(nuevo_vm, id_centro)
+            if agregado:
+                print(f"MaquinaVirtual {id_mv} cargado exitosamente.")
 
 
             if self.controladorVM.lista_vm is None:
@@ -99,7 +103,8 @@ class Lector:
                     nuevo_vm.contenedores.agregar_dato(nuevo_cont)
 
                     print(f"Contenedor {id_cont} cargado exitosamente.")
-            
+
+
 
     def cargar_solicitudes(self,root):
         solicitudes_xml = root.find('.//solicitudes')
