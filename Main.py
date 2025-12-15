@@ -64,7 +64,7 @@ class Funciones:
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
         print("="*20)
-        ruta = self.controladorMenu.cargar_xml('entrada')
+        ruta = self.controladorMenu.cargar_xml('carpeta_xml\entrada.xml')
         self.lector.cargar_archivo_xml(ruta)
     
 
