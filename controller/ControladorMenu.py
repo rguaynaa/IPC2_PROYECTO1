@@ -15,3 +15,4 @@ class ControladorMenu:
         except FileNotFoundError:
             print(f'Archivo no encontrado: {ruta_archivo}')
             return ''
+    

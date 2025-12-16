@@ -76,7 +76,7 @@ class Funciones:
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
         print("="*20)
-        ruta = self.controladorMenu.cargar_xml('carpeta_xml\entrada.xml')
+        ruta = self.controladorMenu.cargar_xml('carpeta_xml\entrada')
         self.lector.cargar_archivo_xml(ruta)
     
 
@@ -96,8 +96,13 @@ class Funciones:
             if opcion=="1":
                 self.controladorCentro.mostrar_centros_datos()
             elif opcion=="2":
+
                 id_buscado = input("Ingrese el ID: ")
-                self.controladorCentro.lista_centros.buscar_dato_por_id(id_buscado,'id')
+                centro_encontrado = self.controladorCentro.lista_centros.buscar_dato_por_id(id_buscado,'id')
+                if centro_encontrado:
+                    centro_encontrado.mostrar_datos()
+                else:
+                    return centro_encontrado
             elif opcion=="3":
                 print("Mostrando Centro con mayor recursos...")
                 self.controladorCentro.ver_centro_mayor_recursos()
