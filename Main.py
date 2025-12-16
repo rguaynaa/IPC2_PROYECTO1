@@ -6,6 +6,7 @@ from controller.ControladorVM import ControladorVM
 from controller.ControladorCentros import ControladorCentros
 from controller.ControladorSolicitudes import ControladorSolicitudes
 from controller.ControladorInstrucciones import ControladroInstrucciones
+from controller.ControladorGraphviz import ControladorGraphviz
 
 
 class Main:
@@ -67,6 +68,10 @@ class Funciones:
         self.controllerInstruccion = ControladroInstrucciones() 
         self.lector = Lector(controladorVM=self.controladorVM,controladorCentros=self.controladorCentro,
                              controladorSolicitudes=self.controladorSolicitudes,controllerInstruccion=self.controllerInstruccion)
+        self.controladorSolicitudes = ControladorSolicitudes() 
+        self.controladorGraphviz = ControladorGraphviz()
+
+
 
     def cargarArchivoXML(self):
         print("\n" +"="*20)
@@ -268,16 +273,20 @@ class Funciones:
             
             if opcion=="1":
                 print("Generando Reporte de Centros de Datos...")
-                # LOGICA O METODO A LLAMAR
+                self.controladorGraphviz.generar_reporte_centros(self.controladorCentro)
             elif opcion=="2":   
                 print("Generando Reporte de VM en un Centro de Datos según ID...")
-                # LOGICA O METODO A LLAMAR
+                id_centro = input("Ingrese ID del Centro de Datos: ")
+                print(f"Generando Reporte de VM en el Centro {id_centro}...")
+                self.controladorGraphviz.generar_reporte_vms(self.controladorCentro, id_centro)
             elif opcion=="3":
                 print("Generando Reporte de Contenedor Desplegado en una VM según ID...")
-                # LOGICA O METODO A LLAMAR
+                id_vm = input("Ingrese ID de la VM: ")
+                print(f"Generando Reporte de Contenedores en la VM {id_vm}...")
+                self.controladorGraphviz.generar_reporte_contenedores(self.controladorVM, id_vm)
             elif opcion=="4":
                 print("Generando Reporte de la Cola de Solicitudes...")
-                # LOGICA O METODO A LLAMAR
+                self.controladorGraphviz.generar_reporte_solicitudes(self.controladorSolicitudes)
             elif opcion=="5":
                 print("Volviendo al Menú Principal...")
                 break
