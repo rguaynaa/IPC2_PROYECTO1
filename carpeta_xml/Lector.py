@@ -115,7 +115,7 @@ class Lector:
             id_sol = sol.get('id')
 
             cliente = sol.find('cliente').text
-            tipo = sol.find('cliente').text
+            tipo = sol.find('tipo').text
             prioridad = int(sol.find('prioridad').text)
 
             recursos = sol.find('recursos')

@@ -218,13 +218,27 @@ class Funciones:
             opcion = input("Seleccione una opción: ")
             if opcion=="1":
                 print("Agregando Solicitud...")
-                self.controladorMenu.agregar_solicitud()
+                print("="*30)
+                print("| Agregar Nueva Solicitud |")
+                print("="*30)
+                print("| Ingrese los datos|")
+                print("-"*30)
+
+                id = input("ID de la solicitud: ")
+                cliente = input("Nombre del cliente: ")
+                tipo = input("Tipo Deploy o Backup: ")
+                prioridad = int(input("Prioridad: "))
+                cpu = int(input("CPU: "))
+                ram = int(input("RAM (GB): "))
+                alm = int(input("Almacenamiento GB: "))
+                tiempo = int(input("Tiempo: "))
+                self.controladorSolicitudes.agregar_solicitud( id, cliente, tipo, prioridad, cpu, ram, alm, tiempo)
+
             elif opcion=="2":
                 print("Procesando Solicitud de Mayor Prioridad...")
-                self.controladorMenu.procesar_siguiente()
+                self.controladorSolicitudes.procesar_solicitud(self.controladorCentro)
             elif opcion=="3":
                 print("Procesando las Solicitudes...")
-                self
             elif opcion=="4":
                 print("Viendo Cola de Solicitudes...")
                 self.controladorSolicitudes.ver_cola()

@@ -14,8 +14,8 @@ class CentroDatos:
     def mostrar_datos(self):
         print("Centro: ",self.nombre, "(",self.id,")", "-", self.ciudad, ",", self.pais)
         print("Ubicación: ",self.ciudad, "," ,self.pais)
-        print("CPU: ",self.cpu_disponible(),"/",self.cpu_nucleos_total) #Pendiente de configurar
-        print("RAM: ",self.ram_disponible(),"/",self.ram_total_GB,"GB") #Pendiente de configurar
+        print("CPU: ",self.cpu_disponible(),"/",self.cpu_nucleos_total,"(",self.porcentaje_uso_cpu(),"% usado)") #Pendiente de configurar
+        print("RAM: ",self.ram_disponible(),"/",self.ram_total_GB,"GB","(",self.porcentaje_uso_ram(),"% usado)") #Pendiente de configurar
         print("Almacenamiento: ",self.almacenamiento_disponible(),"/",self.almacenamiento_total_GB,"TB") #Pendiente de configurar 
         print("VMs activas: ",self.vm.obtener_longitud())
     
@@ -45,11 +45,17 @@ class CentroDatos:
     
     def porcentaje_uso_cpu(self):
         if self.cpu_nucleos_total > 0:
-            procentaje = ((self.cpu_nucleos_total - self.cpu_disponible)/ self.cpu_nucleos_total * 100)
+            procentaje = ((self.cpu_nucleos_total - self.cpu_disponible())/ self.cpu_nucleos_total * 100)
             return procentaje
         else:
             return 0
-            
+    
+    def porcentaje_uso_ram(self):
+        if self.ram_total_GB > 0:
+            porcentaje = ((self.ram_total_GB - self.ram_disponible())/ self.ram_total_GB * 100)
+            return porcentaje
+        else:
+            return 0
 
 
     

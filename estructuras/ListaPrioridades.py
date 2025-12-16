@@ -23,3 +23,15 @@ class ListaCola:
             actual.siguiente = nuevo_nodo
             
         self.longitud += 1
+    
+
+    def extraer_urgente(self):
+        if self.esta_vacia():
+            print("La cola se encuentra vacía.")
+            return None
+        dato = self.primero.dato
+        self.primero = self.primero.siguiente
+        self.longitud -= 1
+        return dato
+
+
