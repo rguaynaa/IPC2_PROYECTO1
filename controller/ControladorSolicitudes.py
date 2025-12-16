@@ -1,5 +1,6 @@
 from estructuras.ListaPrioridades import ListaCola 
 from modelos.Solicitud import Solicitud
+from modelos.MaquinaVirtual import MaquinaVirtual
 
 class ControladorSolicitudes:
     def __init__(self):
@@ -25,17 +26,73 @@ class ControladorSolicitudes:
             actual = actual.siguiente
             pos += 1
 
-    def procesar_siguiente(self):
-        """Atiende la solicitud con mayor prioridad (la primera de la lista)"""
+
+    def procesar_solicitud(self, controladorCentro):
         if self.cola_solicitudes.primero is None:
-            print("No hay solicitudes pendientes.")
+            print("No existe solicitudes pendientes.")
             return
 
-        solicitud_top = self.cola_solicitudes.primero.dato
-        print(f"\nProcesando solicitud prioritaria: {solicitud_top.id} de {solicitud_top.cliente}")
+        solicitud = self.cola_solicitudes.primero.dato
+
+        centroDisponible = self.centro_mayor_recurso_disponible(controladorCentro, solicitud)
+
+        if centroDisponible is None:
+            print("No existe centro con recursos suficientes para la solicitud.")
+            return
+
+        mv_nueva = MaquinaVirtual(solicitud.id, centroDisponible.id, " ", solicitud.cpu, solicitud.ram_GB, solicitud.almacenamiento_GB, "")
+        centroDisponible.vm.agregar_dato(mv_nueva)
+
+        self.cola_solicitudes.extraer_urgente()
+        print("Solicitud procesada ",solicitud.id)
+
+    
+    def procesar_varias_solicitudes(self, controladorCentro,cantidad):
+        if self.cola_solicitudes.primero is None:
+            print("No existe solicitudes pendientes.")
+            return
         
-        # Eliminar de la cola 
-        self.cola_solicitudes.primero = self.cola_solicitudes.primero.siguiente
-        self.cola_solicitudes.longitud -= 1
+        for i in range(cantidad):
+
+            solicitud = self.cola_solicitudes.primero.dato
+
+            centroDisponible = self.centro_mayor_recurso_disponible(controladorCentro, solicitud)
+
+            if centroDisponible is None:
+                print("No existe centro con recursos suficientes para la solicitud.")
+                return
+
+            mv_nueva = MaquinaVirtual(solicitud.id, centroDisponible.id, " ", solicitud.cpu, solicitud.ram_GB, solicitud.almacenamiento_GB, "")
+            centroDisponible.vm.agregar_dato(mv_nueva)
+
+            self.cola_solicitudes.extraer_urgente()
+            print("Solicitud procesada ",solicitud.id)
+
+
+
+    def centro_mayor_recurso_disponible(self, controladorCentro, solicitud=None):
+
+        centroDisponible = None
+        recursoMayor = -1
+
+        actual = controladorCentro.lista_centros.primero
+
+        while actual:
+            centro = actual.dato
+
+            if solicitud:
+                if not (centro.cpu_disponible() >= solicitud.cpu and
+                        centro.ram_disponible() >= solicitud.ram_GB and
+                        centro.almacenamiento_disponible() >= solicitud.almacenamiento_GB):
+                    actual = actual.siguiente
+                    continue
+
+            recurso = centro.cpu_disponible() + centro.ram_disponible() + centro.almacenamiento_disponible()
+            if recurso > recursoMayor:
+                recursoMayor = recurso
+                centroDisponible = centro
+            actual = actual.siguiente
         
-        print("Solicitud procesada y removida de la cola.")
+        return centroDisponible
+
+

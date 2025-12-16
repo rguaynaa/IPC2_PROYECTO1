@@ -1,22 +1,20 @@
 from modelos.Contenedor import Contenedor
-from modelos.Instrucciones import CrearVM, MigrarVM, Procesar
+from modelos.Instrucciones import Instruccion
 import xml.etree.ElementTree as ET
 from modelos.CentroDatos import CentroDatos
 from modelos.MaquinaVirtual import MaquinaVirtual
 from controller.ControladorVM import ControladorVM
 from controller.ControladorCentros import ControladorCentros
 from controller.ControladorSolicitudes import ControladorSolicitudes
+from controller.ControladorInstrucciones import ControladroInstrucciones
 
 
 class Lector:
-    def __init__(self, controladorVM=None, controladorCentros=None, controladorSolicitudes = None):
+    def __init__(self, controladorVM=None, controladorCentros=None, controladorSolicitudes = None, controllerInstruccion = None):
         self.controladorVM = controladorVM if controladorVM is not None else ControladorVM()
         self.controladorCentros = controladorCentros if controladorCentros is not None else ControladorCentros()
         self.controladorSolicitudes = controladorSolicitudes if controladorSolicitudes is not None else ControladorSolicitudes()
-        self.list_crearVM = []
-        self.list_migrarVM = []
-        self.list_procesar = []
-
+        self.controllerInstruccion = controllerInstruccion if controllerInstruccion is not None else ControladroInstrucciones()
     
     def cargar_archivo_xml(self, ruta_archivo):
         try:
@@ -115,7 +113,7 @@ class Lector:
             id_sol = sol.get('id')
 
             cliente = sol.find('cliente').text
-            tipo = sol.find('cliente').text
+            tipo = sol.find('tipo').text
             prioridad = int(sol.find('prioridad').text)
 
             recursos = sol.find('recursos')
@@ -129,6 +127,8 @@ class Lector:
 
 
     def cargar_instrucciones(self, root):
+
+        print("=== Ejecutando Instrucciones ===")
         instrucciones_xml = root.find('.//instrucciones')
 
         if instrucciones_xml is None:
@@ -138,44 +138,47 @@ class Lector:
             tipo_inst = inst.get('tipo')
 
             if tipo_inst == ('crearVM'):
+
                 id_vm = inst.find('id').text
                 id_centro = inst.find('centro').text
                 so = inst.find('so').text
-                cpu = inst.find('cpu').text
-                ram = inst.find('ram').text
-                almacenamiento = inst.find('almacenamiento').text
-                nuevoCrearVM = CrearVM(tipo_inst,id_vm,id_centro,so,cpu,ram,almacenamiento)
-                self.list_crearVM.append(nuevoCrearVM)
+                cpu = int(inst.find('cpu').text)
+                ram = int(inst.find('ram').text)
+                almacenamiento = int(inst.find('almacenamiento').text)
 
-                print(f"Instruccion {tipo_inst} cargado exitosamente")
-                for crear in self.list_crearVM:
-                    crear.mostrar_datos()
+                nueva_VM = MaquinaVirtual(id_vm,id_centro,so,cpu,ram,almacenamiento,"")
+                nuevaInst = Instruccion(tipo_inst,id_vm,id_centro,so,cpu,ram,almacenamiento," ",0)
+
+                self.controllerInstruccion.crear_instrucciones(nuevaInst)
+
+                self.controladorCentros.agregar_vm(nueva_VM, id_centro)
+
+                print(f"Instruccion {tipo_inst} ejecutado exitosamente")
+
             
             elif tipo_inst == ('migrarVM'):
                 id_vm = inst.find('vmId').text
-                id_centro_origen = inst.find('centroOrigen').text
+                id_centro = inst.find('centroOrigen').text
                 id_centro_destino = inst.find('centroDestino').text
 
-                nuevaMigra = MigrarVM(tipo_inst,id_vm,id_centro_origen,id_centro_destino)
-                self.list_migrarVM.append(nuevaMigra)
+                nuevaInst = Instruccion(tipo_inst,id_vm,id_centro," ",0,0,0,id_centro_destino,0)
 
+                self.controllerInstruccion.crear_instrucciones(nuevaInst)
+                self.controladorVM.migrar_vm(self.controladorCentros,id_vm,id_centro_destino)
 
-                print(f"Instruccion {tipo_inst} cargado exitosamente")
-
-                for migra in self.list_migrarVM:
-                    migra.mostrar_datos()
+                print(f"Instruccion {tipo_inst} ejecutado exitosamente")
 
             
             elif tipo_inst == ('procesarSolicitudes'):
-                cantidad = inst.find('cantidad').text
+                cantidad = int(inst.find('cantidad').text)
 
-                nuevoProce = Procesar(tipo_inst,cantidad)
-                self.list_procesar.append(nuevoProce)
+                nuevaInst = Instruccion(tipo_inst," "," "," ",0,0,0," ",cantidad)
 
-                for p in self.list_procesar:
-                    p.mostrar_datos()
+                self.controllerInstruccion.crear_instrucciones(nuevaInst)
 
-                print(f"Instruccion {tipo_inst} cargado exitosamente")
+                self.controladorSolicitudes.procesar_varias_solicitudes(self.controladorCentros, cantidad)
+
+                print(f"Instruccion {tipo_inst} ejecutado exitosamente")
 
 
 
