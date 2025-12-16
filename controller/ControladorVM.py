@@ -27,13 +27,8 @@ class ControladorVM:
     def listar_vms_de_centro(self, controlador_centros, id_centro):
         centro = controlador_centros.lista_centros.buscar_dato_por_id(id_centro, 'id')
         if centro:
-<<<<<<< Updated upstream
             print(f"\n VMS EN {centro.nombre}")
 
-=======
-            print(f"\n--- LISTADO DE VMS EN {centro.nombre} ---")
->>>>>>> Stashed changes
-            centro.vm.mostrar_informacion()
         else:
             print(f"Error: El centro {id_centro} no existe.")
 

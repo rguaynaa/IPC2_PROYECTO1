@@ -60,17 +60,13 @@ class Funciones:
 
         self.controladorMenu = ControladorMenu()
         self.controladorCentro = ControladorCentros()
-<<<<<<< Updated upstream
         self.controladorVM = ControladorVM()
         self.ControladorContenedores = ControladorContenedores(self.controladorVM)
         self.controladorSolicitudes = ControladorSolicitudes() 
-        self.lector = Lector(controladorVM=self.controladorVM,controladorCentros=self.controladorCentro)
-=======
-        self.controladorSolicitudes = ControladorSolicitudes()
-        self.lector = Lector(controladorVM=self.controladorVM, controladorCentros=self.controladorCentro, controladorSolicitudes=self.controladorSolicitudes)
+        self.lector = Lector(controladorVM=self.controladorVM,controladorCentros=self.controladorCentro,controladorSolicitudes=self.controladorSolicitudes)
 
 
->>>>>>> Stashed changes
+
     def cargarArchivoXML(self):
         print("\n" +"="*20)
         print("|Cargar Archivo XML|")
@@ -126,7 +122,6 @@ class Funciones:
             opcion = input("Seleccione una opción: ")
 
             if opcion=="1":
-<<<<<<< Updated upstream
                 print("Buscando VM por ID...")
                 id_vm=input("Ingrese el ID de la VM a buscar: ")
                 self.controladorVM.mostrar_vm_por_id(id_vm)
@@ -135,12 +130,6 @@ class Funciones:
                 print("="*40)
                 id_centro = input("Ingrese el ID del Centro de Datos: ")
                 self.controladorVM.listar_vms_de_centro(self.controladorCentro, id_centro=id_centro)
-=======
-                id_vm=input("Ingrese el ID de la VM a buscar: ")
-                self.controladorVM.mostrar_vm_por_id(id_vm)
-            elif opcion=="2":
-                self.controladorVM.listar_vms_de_centro(self.controladorCentro, id_centro=input("Ingrese el ID del Centro de Datos: "))
->>>>>>> Stashed changes
             elif opcion=="3":
                 print("Migrando VM entre Centros de Datos...")
                 
