@@ -6,7 +6,6 @@ from modelos.MaquinaVirtual import MaquinaVirtual
 from controller.ControladorVM import ControladorVM
 from controller.ControladorCentros import ControladorCentros
 from controller.ControladorSolicitudes import ControladorSolicitudes
-from controller.ControladorInstrucciones import ControladroInstrucciones
 
 
 class Lector:
@@ -14,7 +13,7 @@ class Lector:
         self.controladorVM = controladorVM if controladorVM is not None else ControladorVM()
         self.controladorCentros = controladorCentros if controladorCentros is not None else ControladorCentros()
         self.controladorSolicitudes = controladorSolicitudes if controladorSolicitudes is not None else ControladorSolicitudes()
-        self.controllerInstruccion = controllerInstruccion if controllerInstruccion is not None else ControladroInstrucciones()
+        
     
     def cargar_archivo_xml(self, ruta_archivo):
         try:
@@ -147,9 +146,6 @@ class Lector:
                 almacenamiento = int(inst.find('almacenamiento').text)
 
                 nueva_VM = MaquinaVirtual(id_vm,id_centro,so,cpu,ram,almacenamiento,"")
-                nuevaInst = Instruccion(tipo_inst,id_vm,id_centro,so,cpu,ram,almacenamiento," ",0)
-
-                self.controllerInstruccion.crear_instrucciones(nuevaInst)
 
                 self.controladorCentros.agregar_vm(nueva_VM, id_centro)
 
@@ -161,9 +157,6 @@ class Lector:
                 id_centro = inst.find('centroOrigen').text
                 id_centro_destino = inst.find('centroDestino').text
 
-                nuevaInst = Instruccion(tipo_inst,id_vm,id_centro," ",0,0,0,id_centro_destino,0)
-
-                self.controllerInstruccion.crear_instrucciones(nuevaInst)
                 self.controladorVM.migrar_vm(self.controladorCentros,id_vm,id_centro_destino)
 
                 print(f"Instruccion {tipo_inst} ejecutado exitosamente")
@@ -171,10 +164,6 @@ class Lector:
             
             elif tipo_inst == ('procesarSolicitudes'):
                 cantidad = int(inst.find('cantidad').text)
-
-                nuevaInst = Instruccion(tipo_inst," "," "," ",0,0,0," ",cantidad)
-
-                self.controllerInstruccion.crear_instrucciones(nuevaInst)
 
                 self.controladorSolicitudes.procesar_varias_solicitudes(self.controladorCentros, cantidad)
 

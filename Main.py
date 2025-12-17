@@ -5,7 +5,7 @@ from carpeta_xml.Lector import Lector
 from controller.ControladorVM import ControladorVM
 from controller.ControladorCentros import ControladorCentros
 from controller.ControladorSolicitudes import ControladorSolicitudes
-from controller.ControladorInstrucciones import ControladroInstrucciones
+from carpeta_xml.Reportes_xml import ReporteXML
 
 
 class Main:
@@ -64,9 +64,8 @@ class Funciones:
         self.controladorVM = ControladorVM()
         self.ControladorContenedores = ControladorContenedores(self.controladorVM)
         self.controladorSolicitudes = ControladorSolicitudes()
-        self.controllerInstruccion = ControladroInstrucciones() 
         self.lector = Lector(controladorVM=self.controladorVM,controladorCentros=self.controladorCentro,
-                             controladorSolicitudes=self.controladorSolicitudes,controllerInstruccion=self.controllerInstruccion)
+                             controladorSolicitudes=self.controladorSolicitudes)
 
     def cargarArchivoXML(self):
         print("\n" +"="*20)
@@ -286,7 +285,11 @@ class Funciones:
 
     def generarReporteXML(self):
         print("Generando Reporte XML \"salida.xml\"...")
-        # LOGICA O METODO A LLAMAR
+
+        # Llamar al generador de salida XML y escribir en carpeta_xml/salida.xml
+        reporte = ReporteXML(self.controladorCentro)
+        ok, mensaje = reporte.generar_salida('carpeta_xml/salida.xml')
+        print(mensaje)
     
     def historialOperaciones(self):
         print("Mostrando Historial de Operaciones...")

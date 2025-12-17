@@ -10,13 +10,7 @@ class Instruccion:
         self.centro_destino = centro_destino
         self.cantidad = cantidad
 
-
-    def mostrar_datos(self):
-        print(f'\nTipo: {self.tipo} - Id MV: {self.id_VM} - Id Centro : {self.id_centro} \nSO: {self.so}')
-
     def mostrar_datos(self):
         print(f'\nTipo: {self.tipo} - Id MV: {self.id_VM} - Id Centro : {self.id_centro} \nCentro Destino: {self.id_centro_destino}')
 
-    def mostrar_datos(self):
-        print(f'\nTipo: {self.tipo} \nCantidad: {self.cantidad}')
         
