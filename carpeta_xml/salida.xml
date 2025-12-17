@@ -1,36 +1,75 @@
 <?xml version="1.0" ?>
 <resultadoCloudSync>
-  <timestamp>2025-12-16T18:24:22.923517</timestamp>
+  <timestamp>2025-12-16T21:10:36.105880</timestamp>
   <estadoCentros>
     <centro id="DC001">
-      <nombre>DataCenter Principal</nombre>
+      <nombre>DataCenter Norte</nombre>
       <recursos>
-        <cpuTotal>64</cpuTotal>
-        <cpuDisponible>54</cpuDisponible>
+        <cpuTotal>128</cpuTotal>
+        <cpuDisponible>108</cpuDisponible>
         <cpuUtilizacion>15.62%</cpuUtilizacion>
-        <ramTotal>256</ramTotal>
-        <ramDisponible>236</ramDisponible>
+        <ramTotal>512</ramTotal>
+        <ramDisponible>472</ramDisponible>
         <ramUtilizacion>7.81%</ramUtilizacion>
-      </recursos>
-      <cantidadVMs>3</cantidadVMs>
-      <cantidadContenedores>1</cantidadContenedores>
-    </centro>
-    <centro id="DC002">
-      <nombre>DataCenter Respaldo</nombre>
-      <recursos>
-        <cpuTotal>32</cpuTotal>
-        <cpuDisponible>20</cpuDisponible>
-        <cpuUtilizacion>37.50%</cpuUtilizacion>
-        <ramTotal>128</ramTotal>
-        <ramDisponible>104</ramDisponible>
-        <ramUtilizacion>18.75%</ramUtilizacion>
       </recursos>
       <cantidadVMs>2</cantidadVMs>
       <cantidadContenedores>1</cantidadContenedores>
     </centro>
+    <centro id="DC002">
+      <nombre>DataCenter Sur</nombre>
+      <recursos>
+        <cpuTotal>256</cpuTotal>
+        <cpuDisponible>192</cpuDisponible>
+        <cpuUtilizacion>25.00%</cpuUtilizacion>
+        <ramTotal>1024</ramTotal>
+        <ramDisponible>880</ramDisponible>
+        <ramUtilizacion>14.06%</ramUtilizacion>
+      </recursos>
+      <cantidadVMs>5</cantidadVMs>
+      <cantidadContenedores>6</cantidadContenedores>
+    </centro>
+    <centro id="DC003">
+      <nombre>DataCenter Occidente</nombre>
+      <recursos>
+        <cpuTotal>192</cpuTotal>
+        <cpuDisponible>184</cpuDisponible>
+        <cpuUtilizacion>4.17%</cpuUtilizacion>
+        <ramTotal>768</ramTotal>
+        <ramDisponible>752</ramDisponible>
+        <ramUtilizacion>2.08%</ramUtilizacion>
+      </recursos>
+      <cantidadVMs>1</cantidadVMs>
+      <cantidadContenedores>2</cantidadContenedores>
+    </centro>
+    <centro id="DC004">
+      <nombre>DataCenter Oriente</nombre>
+      <recursos>
+        <cpuTotal>96</cpuTotal>
+        <cpuDisponible>90</cpuDisponible>
+        <cpuUtilizacion>6.25%</cpuUtilizacion>
+        <ramTotal>384</ramTotal>
+        <ramDisponible>372</ramDisponible>
+        <ramUtilizacion>3.12%</ramUtilizacion>
+      </recursos>
+      <cantidadVMs>1</cantidadVMs>
+      <cantidadContenedores>1</cantidadContenedores>
+    </centro>
+    <centro id="DC005">
+      <nombre>DataCenter Central</nombre>
+      <recursos>
+        <cpuTotal>320</cpuTotal>
+        <cpuDisponible>262</cpuDisponible>
+        <cpuUtilizacion>18.12%</cpuUtilizacion>
+        <ramTotal>1536</ramTotal>
+        <ramDisponible>1420</ramDisponible>
+        <ramUtilizacion>7.55%</ramUtilizacion>
+      </recursos>
+      <cantidadVMs>6</cantidadVMs>
+      <cantidadContenedores>3</cantidadContenedores>
+    </centro>
   </estadoCentros>
   <estadisticas>
-    <vmsActivas>5</vmsActivas>
-    <contenedoresTotales>2</contenedoresTotales>
+    <vmsActivas>15</vmsActivas>
+    <contenedoresTotales>13</contenedoresTotales>
   </estadisticas>
 </resultadoCloudSync>
