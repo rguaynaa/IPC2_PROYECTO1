@@ -8,10 +8,26 @@ class ControladorCentros:
         self.lista_centros.agregar_dato(centro)
 
     def mostrar_centros_datos(self):
-        print("\n" +"="*30)
+        print("\n" +"="*32)
         print("|   Lista de Centros de Datos   |")
-        print("="*30)
-        self.lista_centros.mostrar_informacion()
+        print("="*32)
+        print("")
+
+        if self.lista_centros.esta_vacia():
+            print("No hay centros de datos registrados.")
+            return
+        
+        contador=1
+        actual= self.lista_centros.primero
+        while actual is not None:
+            print(f"{contador}.{actual.dato.id}")
+            actual.dato.mostrar_datos()
+            contador += 1
+
+            actual = actual.siguiente
+            print("")
+            
+
 
 
     def agregar_vm(self, vm, id_centro):
@@ -49,7 +65,7 @@ class ControladorCentros:
     
                 actual = actual.siguiente
             if centro_mayor:
-                print("Centro de Datos con mayor recursos:")
+                print("")
                 centro_mayor.mostrar_datos()
             else:
                 print("No se encontraron centros de datos") 

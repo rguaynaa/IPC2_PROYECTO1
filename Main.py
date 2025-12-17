@@ -99,12 +99,23 @@ class Funciones:
             elif opcion=="2":
                 id_buscado = input("Ingrese el ID: ")
                 centro_encontrado = self.controladorCentro.lista_centros.buscar_dato_por_id(id_buscado,'id')
+                print("")
+                print("="*30)
+                print(f"|Centro de Datos Buscado: {id_buscado}|")
+                print("="*30)
+                print("")
+
                 if centro_encontrado:
+                    print("-"*32)
+                    print("|Centro de Datos Encontrado:|")
+                    print("-"*32)
+                    print("")
                     centro_encontrado.mostrar_datos()
+                    print("")
                 else:
-                    return centro_encontrado
+                    print("Centro de Datos no encontrado.")
+
             elif opcion=="3":
-                print("Mostrando Centro con mayor recursos...")
                 self.controladorCentro.ver_centro_mayor_recursos()
             elif opcion=="4":
                 print("Volviendo al Menú Principal...")
@@ -128,8 +139,10 @@ class Funciones:
             opcion = input("Seleccione una opción: ")
 
             if opcion=="1":
-                print("Buscando VM por ID...")
+                print("")
                 id_vm=input("Ingrese el ID de la VM a buscar: ")
+                print("")
+                
                 self.controladorVM.mostrar_vm_por_id(id_vm)
 
             elif opcion=="2":
@@ -137,10 +150,12 @@ class Funciones:
                 id_centro = input("Ingrese el ID del Centro de Datos: ")
                 self.controladorVM.listar_vms_de_centro(self.controladorCentro, id_centro=id_centro)
             elif opcion=="3":
-                print("Migrando VM entre Centros de Datos...")
+                print("")
                 
                 id_vm = input("Ingrese ID de la VM a migrar: ")
+                print("")
                 id_destino = input("Ingrese ID del Centro Destino: ")
+                print("")
                 self.controladorVM.migrar_vm(self.controladorCentro, id_vm, id_destino)
             elif opcion=="4":
                 print("Volviendo al Menú Principal...")
@@ -186,8 +201,8 @@ class Funciones:
                 self.ControladorContenedores.listar_contenedores_vm(id_vm)
 
             elif opcion=="3":
-                print("Cambiando Estado de un contenedor...")
-                print("Cambiando Estado de un contenedor...")
+                print("")
+               
                 id_vm = input("Ingrese ID de la VM: ")
                 id_cont = input("Ingrese ID del Contenedor: ")
                 print("1. Activar")
@@ -200,7 +215,7 @@ class Funciones:
                 else:
                     print("Opción no válida.")
             elif opcion=="4":
-                print("Eliminando Contenedor de una VM...")
+                print("")
                 id_vm = input("ID de la VM: ")
                 id_cont = input("ID del Contenedor a eliminar: ")
                 self.ControladorContenedores.eliminar_contenedor(id_vm, id_cont)
@@ -223,7 +238,7 @@ class Funciones:
             print("="*42)
             opcion = input("Seleccione una opción: ")
             if opcion=="1":
-                print("Agregando Solicitud...")
+                print("")
                 print("="*30)
                 print("| Agregar Nueva Solicitud |")
                 print("="*30)
@@ -241,14 +256,14 @@ class Funciones:
                 self.controladorSolicitudes.agregar_solicitud( id, cliente, tipo, prioridad, cpu, ram, alm, tiempo)
 
             elif opcion=="2":
-                print("Procesando Solicitud de Mayor Prioridad...")
+                print("")
                 self.controladorSolicitudes.procesar_solicitud(self.controladorCentro)
             elif opcion=="3":
-                print("Procesando las Solicitudes...")
+                print("")
                 cantidad = input("Cantidad que desea ejecutar: ")
                 self.controladorSolicitudes.procesar_varias_solicitudes(self.controladorCentro,cantidad)
             elif opcion=="4":
-                print("Viendo Cola de Solicitudes...")
+                print("")
                 self.controladorSolicitudes.ver_cola()
                 # LOGICA O METODO A LLAMAR
             elif opcion=="5":

@@ -46,7 +46,7 @@ class ListaSimpleEnlazada:
                     return actual.dato
                    
             actual = actual.siguiente
-        print(f"El centro {id_buscado}, no fue encontrado.")
+        print(f"El {id_buscado}, no fue encontrado.")
         return None
 
 

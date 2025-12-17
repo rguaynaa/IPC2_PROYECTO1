@@ -11,9 +11,16 @@ class MaquinaVirtual:
         self.ip = ip
         self.contenedores = ListaSimpleEnlazada()
         self.estado = "Activa"
+
+    def __str__(self):
+        return f"VM ID: {self.id}"
+        
+    def obtener_id_legible(self):
+        return self.id
     
 
     def mostrar_datos(self):
+        print("")
         print("VM: ",self.id," - ",self.so,"(", "CPU: ",self.cpu_nucleos,"RAM: ",self.ram_GB,")")
         print("Estado: ",self.estado)
         print("IP: ",self.ip)
