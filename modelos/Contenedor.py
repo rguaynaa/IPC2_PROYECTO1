@@ -6,7 +6,7 @@ class Contenedor:
         self.cpu_porcentaje = cpu_porcentaje
         self.ram_MB = ram_MB
         self.puerto = puerto
-        self.estado = "Activo"  # Estados posibles: Activo, Pausado, Reiniciando
+        self.estado = "Activo"
 
     def __str__(self):
         return f"{self.id}"
@@ -15,4 +15,4 @@ class Contenedor:
         return self.id
 
     def mostrar_datos(self):
-        print(f'\nContenedor: {self.id} - {self.nombre} ({self.imagen}) - Puerto: {self.puerto} \nEstado: {self.estado} \nCPU: {self.cpu_porcentaje} \nRAM: {self.ram_MB}')
+        print(f'\nContenedor:{self.id}-{self.nombre} ({self.imagen})-Puerto:{self.puerto} \nEstado: {self.estado} \nCPU: {self.cpu_porcentaje}\nRAM:  {self.ram_MB}' )

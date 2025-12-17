@@ -1,10 +1,10 @@
 from controller.ControladorContenedores import ControladorContenedores
+from controller.ControladorInstrucciones import ControladroInstrucciones
 from controller.ControladorSolicitudes import ControladorSolicitudes
 from controller.ControladorMenu import ControladorMenu
 from carpeta_xml.Lector import Lector
 from controller.ControladorVM import ControladorVM
 from controller.ControladorCentros import ControladorCentros
-from controller.ControladorSolicitudes import ControladorSolicitudes
 from carpeta_xml.Reportes_xml import ReporteXML
 from controller.ControladorGraphviz import ControladorGraphviz
 
@@ -27,8 +27,7 @@ class Main:
             print("|5. Gestión de Solicitudes.            |")
             print("|6. Reportes en Graphviz.              |")
             print("|7. Generar Reporte XML \"salida.xml\".|")
-            print("|8. Historial de Operaciopnes.         |")
-            print("|9. Salir.                             |")
+            print("|8. Salir.                             |")
             print("="*40)
 
             opcion = input("Seleccione una opción: ")
@@ -49,8 +48,6 @@ class Main:
             elif opcion=="7":
                 self.funciones.generarReporteXML()
             elif opcion=="8":
-                self.funciones.historialOperaciones()
-            elif opcion=="9":
                 self.funciones.salir()
                 break
             else:
@@ -65,9 +62,9 @@ class Funciones:
         self.controladorVM = ControladorVM()
         self.ControladorContenedores = ControladorContenedores(self.controladorVM)
         self.controladorSolicitudes = ControladorSolicitudes()
+        self.controllerInstruccion = ControladroInstrucciones() 
         self.lector = Lector(controladorVM=self.controladorVM,controladorCentros=self.controladorCentro,
-                             controladorSolicitudes=self.controladorSolicitudes)
-        self.controladorSolicitudes = ControladorSolicitudes() 
+                             controladorSolicitudes=self.controladorSolicitudes,controllerInstruccion=self.controllerInstruccion)
         self.controladorGraphviz = ControladorGraphviz()
 
 
@@ -314,9 +311,6 @@ class Funciones:
         ok, mensaje = reporte.generar_salida('carpeta_xml/salida.xml')
         print(mensaje)
     
-    def historialOperaciones(self):
-        print("Mostrando Historial de Operaciones...")
-        # LOGICA O METODO A LLAMAR
     
     def salir(self):
         print("Saliendo del programa...")
